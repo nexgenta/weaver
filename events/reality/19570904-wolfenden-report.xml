@@ -14,6 +14,20 @@
 	<title>BBC Archive: Press Conference: Sir John Wolfenden</title>
   </link>
   <agent>john-wolfenden</agent>
+  <agent>james-adair</agent>
+  <agent>mary-g-cohen</agent>
+  <agent>desmond-curran</agent>
+  <agent>vigo-auguste-demant</agent>
+  <agent>kenneth-diplock</agent>
+  <agent>hugh-linstead</agent>
+  <agent>peter-kerr</agent>
+  <agent>kathleen-lovibond</agent>
+  <agent>victor-mishcon</agent>
+  <agent>goronwy-rees</agent>
+  <agent>r-f-v-scott</agent>
+  <agent>lily-allan-stopford</agent>
+  <agent>william-t-wells</agent>
+  <agent>joseph-whitby</agent>
   <factor>wolfenden-report</factor>
   <date>1957-09-04</date>
 </event>

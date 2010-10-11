@@ -2,8 +2,22 @@
 <event>
   <title>Wolfenden Committee meets for the first time</title>
   <uuid>a906ffc2-10df-4803-9524-f2646f3ad705</uuid>
-  <factor>wolfenden-report</factor>
   <date>1954-09-15</date>
   <universe>reality</universe>
+  <agent>john-wolfenden</agent>
+  <agent>james-adair</agent>
+  <agent>mary-g-cohen</agent>
+  <agent>desmond-curran</agent>
+  <agent>vigo-auguste-demant</agent>
+  <agent>kenneth-diplock</agent>
+  <agent>hugh-linstead</agent>
+  <agent>peter-kerr</agent>
+  <agent>kathleen-lovibond</agent>
+  <agent>victor-mishcon</agent>
+  <agent>goronwy-rees</agent>
+  <agent>r-f-v-scott</agent>
+  <agent>lily-allan-stopford</agent>
+  <agent>william-t-wells</agent>
+  <agent>joseph-whitby</agent>
 </event>
-	
+
