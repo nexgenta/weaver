@@ -39,4 +39,31 @@ class Story extends Thing
 		$model = self::$models[get_class($this)];
 		return $model->query(array('kind' => 'character', 'universe' => $this->universe, 'tag' => $this->uuid));
 	}
+	
+	public function rdfResource($doc, $request)
+	{
+		$stories = 'http://contextus.net/stories/';
+		$olo = 'http://purl.org/ontology/olo/core#';
+		$g = $doc->graph($doc->primaryTopic, $stories.'Story');
+		if(isset($this->subjects))
+		{
+			foreach($this->subjects as $subj)
+			{
+				$g->{RDF::dct.'subject'}[] = new RDFURI($subj);
+			}
+		}
+		$el = new RDFGraph(null, $stories.'EventList');
+		$events = $this->offsetGet('events');
+		$c = 1;
+		foreach($events as $ev)
+		{
+			$eg = new RDFGraph(null, $stories . 'EventSlot');
+			$eg->{$olo.'index'}[] = $c;
+			$eg->{RDF::rdfs.'label'}[] = $ev->title;
+			$eg->{$stories.'item'}[] = new RDFURI($request->root . $ev->__get('instanceRelativeURI'));
+			$el->{$stories.'slot'}[] = $eg;
+			$c++;
+		}
+		$g->{$stories.'events'}[] = $el;
+	}
 }

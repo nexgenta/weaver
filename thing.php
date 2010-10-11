@@ -161,6 +161,8 @@ class Thing extends Storable
 			$this->referenceObject('universe', $u->uuid);
 		}
 		$this->transformProperty('link', 'links');
+		$this->transformProperty('altName', 'altNames');
+		$this->transformProperty('subject', 'subjects');
 		$this->ensurePropertyIsAnArray('sameAs');
 		$this->ensurePropertyIsAnArray('seeAlso');
 		$this->ensurePropertyIsAnArray('containedIn');
@@ -231,7 +233,11 @@ class Thing extends Storable
 	public function rdf($doc, $request)
 	{	   
 		$doc->namespace('http://purl.org/ontology/po/', 'po');
-		$doc->namespace('http://purl.org/ontology/mo/', 'mo');
+		$doc->namespace('http://contextus.net/stories/', 'stories');
+		$doc->namespace('http://purl.org/NET/c4dm/event.owl#', 'ev');
+		$doc->namespace('http://purl.org/ontology/olo/core#', 'olo');
+		$doc->namespace('http://purl.org/NET/c4dm/timeline.owl#', 'tl');
+
 		$this->rdfDocument($doc, $request);
 		$this->rdfResource($doc, $request);
 		$this->rdfLinks($doc, $request);
@@ -242,10 +248,35 @@ class Thing extends Storable
 		$resourceGraph = $doc->graph($doc->fileURI);
 		$resourceGraph->{'http://purl.org/dc/terms/created'}[] = new RDFDateTime($this->created);
 		$resourceGraph->{'http://purl.org/dc/terms/modified'}[] = new RDFDateTime($this->modified);
+		$resourceGraph->{RDF::foaf.'primaryTopic'}[] = new RDFURI($doc->primaryTopic);
+		$resourceGraph->{RDF::rdfs.'label'}[] = 'Description of the ' . $this->kind . ' ' . $this->title;
 	}
 
 	protected function rdfResource($doc, $request)
 	{
+		$g = $doc->graph($doc->primaryTopic, RDF::owl.'Thing');
+		$g->{RDF::foaf.'label'}[] = $this->title;
+		if(isset($this->subjects))
+		{
+			foreach($this->subjects as $subj)
+			{
+				$g->{RDF::dct.'subject'}[] = new RDFURI($subj);
+			}
+		}
+		if(isset($this->sameAs))
+		{
+			foreach($this->sameAs as $subj)
+			{
+				$g->{RDF::owl.'sameAs'}[] = new RDFURI($subj);
+			}
+		}
+		if(isset($this->seeAlso))
+		{
+			foreach($this->seeAlso as $subj)
+			{
+				$g->{RDF::foaf.'seeAlso'}[] = new RDFURI($subj);
+			}
+		}
 	}
 
 	protected function rdfLinks($doc, $request)	   
@@ -316,6 +347,13 @@ class Thing extends Storable
 	public function featuredIn()
 	{
 		$model = self::$models[get_class($this)];
-		return $model->query(array('kind' => 'story', 'thing' => $this->uuid));	   
+		return $model->query(array('kind' => 'story', 'thing' => $this->uuid));
 	}
+
+	public function featuredInEvents()
+	{
+		$model = self::$models[get_class($this)];
+		return $model->query(array('kind' => 'event', 'tags' => $this->uuid, 'order' => 'date'));
+	}
+
 }

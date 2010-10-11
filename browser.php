@@ -23,5 +23,34 @@ require_once(dirname(__FILE__) . '/model.php');
 class WeaverBrowser extends Page
 {
 	protected $modelClass = 'Weaver';
-	protected $supportedTypes = array('text/html', 'application/json');
+	protected $supportedTypes = array('text/html', 'application/json', 'application/rdf+xml');
+	
+	protected function perform_GET_RDF()
+	{
+		$uri = $this->request->pageUri;
+		if(strlen($uri) > 1 && substr($uri, -1) == '/') $uri = substr($uri, 0, -1);
+
+		$doc = new RDFDocument($uri . '.rdf', $this->request->root . $this->object->__get('instanceRelativeURI'));
+		$this->object->rdf($doc, $this->request);
+		$this->request->header('Content-type', 'application/rdf+xml');
+		$this->request->flush();
+		$xml = $doc->asXML();
+		if(is_array($xml))
+		{
+			writeLn(implode("\n", $xml));
+		}
+		else
+		{
+			writeLn($xml);
+		}
+	}
+
+	protected function assignTemplate()
+	{
+		parent::assignTemplate();
+		$uri = $this->request->pageUri;
+		if(strlen($uri) > 1 && substr($uri, -1) == '/') $uri = substr($uri, 0, -1);
+		$this->links[] = array('href' => $uri . '.rdf', 'type' => 'application/rdf+xml', 'rel' => 'alternate');
+	}
+
 }

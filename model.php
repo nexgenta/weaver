@@ -140,6 +140,31 @@ class Weaver extends Store
 				}
 			}
 		}
+		if(isset($data['factors']))
+		{
+			foreach($data['factors'] as $factor)
+			{
+				$data['tags'][] = $factor;
+			}
+		}
+		if(isset($data['agents']))
+		{
+			foreach($data['agents'] as $agent)
+			{
+				$data['tags'][] = $agent;
+			}
+		}
+		if(isset($data['places']))
+		{
+			foreach($data['places'] as $place)
+			{
+				$data['tags'][] = $place;
+			}
+		}
+		if(isset($data['notionalDate']))
+		{
+			$coreinfo['notional_date'] = $data['notionalDate'];
+		}
 		if(count($coreinfo))
 		{
 			$coreinfo['uuid'] = $uuid;
@@ -209,9 +234,12 @@ class Weaver extends Store
 		$dir = $desc ? 'DESC' : 'ASC';
 		switch($key)
 		{
-			case 'title':
-				$order['weaver_core'][] = '"weaver_core"."title" ' . $dir;
-				return true;
+		case 'title':
+			$order['weaver_core'][] = '"weaver_core"."title" ' . $dir;
+			return true;
+		case 'date':
+			$order['weaver_core'][] = '"weaver_core"."notional_date" ' . $dir;
+			return true;			
 		}
 		return parent::parseOrder($order, $key, $desc);
 	}

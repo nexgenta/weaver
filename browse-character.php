@@ -34,6 +34,8 @@ class WeaverBrowseCharacter extends WeaverBrowser
 	protected function assignTemplate()
 	{
 		parent::assignTemplate();
+		$this->useJQuery();
+		$this->vars['events'] = $this->object->featuredInEvents();
 		$this->vars['stories'] = $this->object->featuredIn();
 	}
 }

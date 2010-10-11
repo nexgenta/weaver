@@ -25,7 +25,7 @@ if(!defined('WEAVER_IRI')) define('WEAVER_IRI', null);
 class WeaverModule extends Module
 {
 	public $moduleId = 'com.nexgenta.weaver';
-	public $latestVersion = 3;
+	public $latestVersion = 4;
 
 	public static function getInstance($args = null)
 	{
@@ -72,7 +72,14 @@ class WeaverModule extends Module
 			$t->indexWithSpec('story', DBIndex::INDEX, 'story');
 			return $t->apply();
 		}
-		return false;
+		if($targetVersion == 4)
+		{
+			$t = $this->db->schema->table('weaver_core');
+			$t->columnWithSpec('notional_date', DBType::DATETIME, null, DBCol::NULLS, null, 'Notional event date');
+			$t->indexWithSpec('notional_date', DBIndex::INDEX, 'notional_date');
+			return $t->apply();
+		}
+		return false;		
 	}
 
 }

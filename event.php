@@ -33,6 +33,17 @@ class Event extends Thing
 		{
 			return $r;
 		}
+		if(isset($this->notionalDate))
+		{
+			if(isset($this->date))
+			{
+				$this->notionalDate = $this->date;
+			}
+			else
+			{
+				return "Events must at least have a notional date";
+			}
+		}
 		$this->transformProperty('factor', 'factors', true);
 		$this->transformProperty('agent', 'agents', true);
 		$this->transformProperty('place', 'places', true);
@@ -44,8 +55,8 @@ class Event extends Thing
 				{
 					return 'Factor "' . $factor . '" does not exist yet';
 				}
+				$this->factors[$k] = $obj->uuid;
 			}
-			$this->factors[$k] = $obj->uuid;
 		}
 		if(isset($this->agents))
 		{
@@ -53,10 +64,10 @@ class Event extends Thing
 			{
 				if(null === ($obj = $model->locateObject($character, null, 'character', $this->universe)))
 				{
-					return 'Agent "' . $factor . '" does not exist yet';
+					return 'Agent "' . $character . '" does not exist yet';
 				}
+				$this->agents[$k] = $obj->uuid;
 			}
-			$this->agents[$k] = $obj->uuid;
 		}
 		if(isset($this->places))
 		{
@@ -66,9 +77,40 @@ class Event extends Thing
 				{
 					return 'Place "' . $place . '" does not exist yet';
 				}
+				$this->places[$k] = $obj->uuid;
 			}
-			$this->places[$k] = $obj->uuid;
 		}
 		return  true;
+	}
+
+	protected function rdfResource($doc, $request)
+	{
+		$events = 'http://purl.org/NET/c4dm/event.owl#';
+		$g = $doc->graph($doc->primaryTopic, $events.'Event');
+		if(isset($this->title))
+		{
+			$g->{RDF::dc.'title'}[] = $this->title;
+		}
+		if(isset($this->factors) && $a = $this->offsetGet('factors'))
+		{
+			foreach($a as $obj)
+			{
+				$g->{$events.'factor'}[] = new RDFURI($request->root . $obj->instanceRelativeURI);
+			}		   
+		}
+		if(isset($this->agents) && $a = $this->offsetGet('agents'))
+		{
+			foreach($a as $obj)
+			{
+				$g->{$events.'agent'}[] = new RDFURI($request->root . $obj->instanceRelativeURI);
+			}
+		}
+		if(isset($this->places) && $a = $this->offsetGet('places'))
+		{
+			foreach($a as $obj)
+			{
+				$g->{$events.'place'}[] = new RDFURI($request->root . $obj->instanceRelativeURI);
+			}
+		}
 	}
 }
