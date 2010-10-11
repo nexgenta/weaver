@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<character>
+  <title>Sir John Wolfenden</title>
+  <slug>john-wolfenden</slug>
+  <universe>reality</universe>
+  <sameAs>http://dbpedia.org/resource/John_Wolfenden,_Baron_Wolfenden</sameAs>
+  <link>
+	<rel>related</rel>
+	<href>http://www.bbc.co.uk/archive/people/74/10.shtml</href>
+	<title>Footage from BBC Archive</title>
+  </link>
+  <firstName>John</firstName>
+  <lastName>Wolfenden</lastName>
+</character>

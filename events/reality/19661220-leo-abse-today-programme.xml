@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event>
+  <title>Leo Abse appears on the "Today" programme</title>
+  <date>1966-12-20</date>
+  <universe>reality</universe>
+  <uuid>17669e06-5fb7-43d6-bd59-f4d91ddf78c5</uuid>
+  <link>
+	<rel>clip</rel>
+	<type>application/vnd.bbc.playlist+xml</type>
+	<href>http://www.bbc.co.uk/archive/xml/12/005.xml</href>
+  </link>
+  <thumbnail>http://www.bbc.co.uk/archive/imageArchive/programmes/12005_leo_abse_off.jpg</thumbnail>
+</event>

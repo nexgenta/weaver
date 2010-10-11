@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story>
+  <title>The campaign for sexual equality in the UK</title>
+  <slug>the-campaign-for-sexual-equality-uk</slug>
+  <universe>reality</universe>
+  <description><![CDATA[In 1967, homosexuality was partially decriminalised in England and Wales. Since then, terms like 'clause 28', 'the age of consent' and 'civil partnerships' have become part of the political language in the fight for gay rights.
+
+We chart the story so far for gay and lesbian equality in the UK. Many of the programmes that clips are taken from reflect the language common at the time when they were first broadcast and illustrate the changing attitudes towards homosexuality in the last 50 years.]]></description>
+  <shortDescription>The story so far for gay and lesbian equality in the UK.</shortDescription>
+  <link>
+	<rel>related</rel>
+	<href>http://news.bbc.co.uk/1/hi/uk_politics/2551523.stm</href>
+	<title>BBC News: Timeline: Gay fight for equal rights</title>
+  </link>
+  <link>
+	<rel>related</rel>
+	<href>http://www.bbc.co.uk/archive/gay_rights/</href>
+	<title>BBC Archive: The Gay Rights Movement Collection</title>
+  </link>
+  <link>
+	<rel>related</rel>
+	<href>http://www.glbtq.com/social-sciences/united_kingdom_02.html</href>
+	<title>glbtq: United Kingdom II: 1900 to the Present</title>
+  </link>
+  <!-- 1953-10-16: Lord Montagu arrested -->
+  <event>482ad660-7802-450b-aa40-3cc1592aefa2</event>
+  <!-- 1954-01-09: Michael Pitt-Rivers arrested -->
+  <event>4c662a1b-4904-4c4a-91e2-45314766d25f</event>
+  <!-- 1954-09-15: Wolfenden Committee meets for the first time -->
+  <event>a906ffc2-10df-4803-9524-f2646f3ad705</event>
+  <!-- 1957-09-04: Publication of the Wolfenden Report -->
+  <event>af50d594-e5f5-4075-9b22-e559aa67c86d</event>
+  <!-- 1957-09-07: John Wolfenden holds a press conference -->
+  <event>c1223d36-798a-4fcc-bac3-d0dc1bf65a0c</event>
+  <!-- 1957-11-15: Any Questions discusses the church's response to the Wolfenden Report -->
+  <event>5db3aed1-eca1-4db4-a949-e3bd672f2448</event>
+  <!-- 1966-12-20: Leo Abse appears on the "Today" programme -->
+  <event>17669e06-5fb7-43d6-bd59-f4d91ddf78c5</event>
+</story>

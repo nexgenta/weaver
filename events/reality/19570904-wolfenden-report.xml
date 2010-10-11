@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event>
+  <title>Publication of the Wolfenden Report</title>
+  <universe>reality</universe>
+  <uuid>af50d594-e5f5-4075-9b22-e559aa67c86d</uuid>
+  <link>
+	<rel>related</rel>
+	<href>http://news.bbc.co.uk/onthisday/hi/dates/stories/september/4/newsid_3007000/3007686.stm</href>
+	<title>BBC On This Day: 1957 - Homosexuality 'should not be a crime'</title>
+  </link>
+  <link>
+	<rel>related</rel>
+	<href>http://www.bbc.co.uk/archive/gay_rights/12001.shtml</href>
+	<title>BBC Archive: Press Conference: Sir John Wolfenden</title>
+  </link>
+  <agent>john-wolfenden</agent>
+  <factor>wolfenden-report</factor>
+  <date>1957-09-04</date>
+</event>

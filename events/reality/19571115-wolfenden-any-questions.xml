@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event>
+  <title>Any Questions discusses the church's response to the Wolfenden Report</title>
+  <universe>reality</universe>
+  <uuid>5db3aed1-eca1-4db4-a949-e3bd672f2448</uuid>
+  <link>
+	<rel>related</rel>
+	<href>http://www.bbc.co.uk/archive/gay_rights/12002.shtml</href>
+	<title>BBC Archive: Any Questions: The Wolfenden Report</title>
+  </link>
+  <agent>john-wolfenden</agent>
+  <factor>wolfenden-report</factor>
+  <date>1957-11-15</date>
+  <thumbnail>http://www.bbc.co.uk/archive/imageArchive/programmes/12002_wolfenden_off.jpg</thumbnail>
+  <description><![CDATA[The panel addresses a question from a member of the audience on the subject of the recently published 'Wolfenden Report'. Does the panel believe the Church has surrendered its moral leadership by accepting the findings of the report, which suggests that 'homosexual behaviour between consenting adults in private should no longer be a criminal offence'? Lord Wolfenden himself is on the panel, along with George Pollock, Director of the Bristol Employers' Confederation (the programme was broadcast from a factory in the town), Joseph Grimond MP and Welsh journalist Percy Cudlipp.]]></description>
+  <link>
+	<rel>clip</rel>
+	<type>application/vnd.bbc.playlist+xml</type>
+	<href>http://www.bbc.co.uk/archive/xml/12/002.xml</href>
+  </link>
+</event>
