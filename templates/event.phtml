@@ -1,0 +1,121 @@
+<?php
+require(dirname(__FILE__) . '/header.php');
+
+$clip = null;
+$links = array();
+if(isset($object->links))
+{
+	foreach($object->links as $link)
+	{
+		if(isset($link['rel']) && $link['rel'] == 'clip')
+		{
+			$clip = $link;
+			continue;
+		}
+        $buf = '<a href="' . _e($link['href'])  .'"';
+        if(isset($link['rel']))
+        {
+			$buf .= ' rel="' . _e($link['rel']) . '"';
+        }
+        $buf .= '>' . _e($link['title']) . '</a>';
+        $links[] = '<li>' . $buf . '</li>';
+	}
+}
+
+writeLn('<div id="primary">');
+
+writeLn('<div class="section">');
+
+if(isset($clip))
+{
+	if($clip['type'] == 'application/vnd.bbc.playlist+xml')
+	{
+		writeLn('<script type="text/javascript" src="http://www.bbc.co.uk/emp/swfobject.js"></script>');
+		writeLn('<script type="text/javascript" src="http://www.bbc.co.uk/emp/embed.js"></script>');
+		writeLn('<div id="emp"></div>');
+		writeLn('<script>' .
+				'var emp = new bbc.Emp();' .
+				'emp.setDomId("emp");' .
+				'emp.setWidth(512);' .
+				'emp.setHeight(323);' .
+				'emp.setPlaylist("' . _e($clip['href']) . '");' .
+				'emp.write();' .
+				'</script>');
+	}
+}
+
+if(isset($object->description))
+{
+	writeLn('<p>' . _e($object->description) . '</p>');
+}
+
+writeLn('</div>');
+
+if(isset($object['agents']))
+{
+	writeLn('<div class="section">');
+	writeLn('<h2>Features</h2>');
+	writeLn('<ul class="people">');
+	foreach($object['agents'] as $obj)
+	{
+		writeLn('<li><a href="' . _e($app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+if(isset($object['factors']))
+{
+	writeLn('<div class="section">');
+	writeLn('<h2>Featured things</h2>');
+	writeLn('<ul class="things">');
+	foreach($object['factors'] as $obj)
+	{
+		writeLn('<li><a href="' . _e($app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+if(isset($object['places']))
+{
+	writeLn('<div class="section">');
+	writeLn('<h2>Featured places</h2>');
+	writeLn('<ul class="places">');
+	foreach($object['places'] as $obj)
+	{
+		writeLn('<li><a href="' . _e($app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+writeLn('</div>');
+writeLn('<div id="secondary">');
+
+$stories = $object->stories();
+if(count($stories))
+{
+	writeLn('<div class="section link-list">');
+	writeLn('<h3>Stories featuring this event:</h3>');
+	writeLn('<ul>');
+	foreach($stories as $story)
+	{
+		writeLn('<li><a href="' . _e($app_root . $story->relativeURI) . '">' . _e($story->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+if(count($links))
+{
+	writeLn('<div class="section link-list">');
+	writeLn('<h3>Links:</h3>');
+	writeLn('<ul>');
+	writeLn(implode("\n", $links));
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+writeLn('</div>');
+
+require(dirname(__FILE__) . '/footer.php');

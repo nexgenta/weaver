@@ -29,7 +29,7 @@ class WeaverBrowseEvent extends WeaverBrowser
 	{
 		if(null === ($tag = $this->request->consume()))
 		{
-			return $this->request->redirect($this->request->root . $this->request->data['universe']->relativeURI);
+			return $this->request->redirect($this->request->base . $this->request->data['universe']->relativeURI);
 		}
 		if(null === ($this->object = $this->model->locateObject($tag, null, 'event', $this->request->data['universe']->uuid)))
 		{

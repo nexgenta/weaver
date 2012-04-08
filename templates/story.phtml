@@ -1,0 +1,42 @@
+<?php
+require(dirname(__FILE__) . '/header.php');
+
+$storyLine = $object['events'];
+
+writeLn('<div class="events section">');
+require_once(dirname(__FILE__) . '/storyline.php');
+writeLn('<div class="selected-story">');
+writeLn('<div id="sel-story-characters"></div><div id="sel-story-desc"></div>');
+writeLn('</div>');
+writeLn('</div>');
+
+writeLn('<div id="primary">');
+
+writeLn('</div>');
+writeLn('<div id="secondary">');
+if(isset($object->description))
+{
+	writeLn('<div class="section"><h2>Story synopsis</h2><p>' . _e($object->description) . '</p></div>');
+}
+if(isset($object->links))
+{
+	writeLn('<div class="section link-list">');
+	writeLn('<h3>Links:</h3>');
+	writeLn('<ul>');
+	foreach($object->links as $link)
+	{
+        $buf = '<a href="' . _e($link['href'])  .'"';
+        if(isset($link['rel']))
+        {
+			$buf .= ' rel="' . _e($link['rel']) . '"';
+        }
+        $buf .= '>' . _e($link['title']) . '</a>';
+        echo '<li>' . $buf . '</li>' . "\n";
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+writeLn('</div>');
+writeLn('<script src="' . _e($skin_iri) . 'storyline.js"></script>');
+
+require(dirname(__FILE__) . '/footer.php');

@@ -1,0 +1,61 @@
+<?php
+require(dirname(__FILE__) . '/header.php');
+
+if(isset($object->description))
+{
+	writeLn('<div class="section"><p>' . _e($object->description) . '</p></div>');
+}
+
+if(count($objects['stories']))
+{
+	writeLn('<div class="stories section">');
+	writeLn('<h2>Featured stories</h2>');
+	writeLn('<ul>');
+	foreach($objects['stories'] as $story)
+	{
+		writeLn('<li><a href="' . _e($app_root . $story->relativeURI) . '">' . _e($story->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+if(count($objects['characters']))
+{
+	writeLn('<div class="characters section">');
+	writeLn('<h2>Featured characters</h2>');
+	writeLn('<ul>');
+	foreach($objects['characters'] as $obj)
+	{
+		writeLn('<li><a href="' . _e($app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+if(count($objects['things']))
+{
+	writeLn('<div class="things section">');
+	writeLn('<h2>Featured things</h2>');
+	writeLn('<ul>');
+	foreach($objects['things'] as $obj)
+	{
+		writeLn('<li><a href="' . _e($app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+if(count($objects['places']))
+{
+	writeLn('<div class="places section">');
+	writeLn('<h2>Featured places</h2>');
+	writeLn('<ul>');
+	foreach($objects['places'] as $obj)
+	{
+		writeLn('<li><a href="' . _e($app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+require(dirname(__FILE__) . '/footer.php');

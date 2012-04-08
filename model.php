@@ -3,7 +3,7 @@
 /*
  * weaver: The stories engine
  *
- * Copyright 2010 Mo McRoberts.
+ * Copyright 2010-2012 Mo McRoberts.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,13 @@
  *  limitations under the License.
  */
 
-uses('store');
+uses('store', 'uri');
+
+URI::registerPrefix('po', 'http://purl.org/ontology/po/');
+URI::registerPrefix('stories', 'http://contextus.net/stories/');
+URI::registerPrefix('ev', 'http://purl.org/NET/c4dm/event.owl#');
+URI::registerPrefix('olo', 'http://purl.org/ontology/olo/core#');
+URI::registerPrefix('tl', 'http://purl.org/NET/c4dm/timeline.owl#');
 
 require_once(dirname(__FILE__) . '/thing.php');
 
@@ -27,6 +33,7 @@ if(!defined('WEAVER_IRI')) define('WEAVER_IRI', null);
 class Weaver extends Store
 {
 	protected $storableClass = 'Thing';
+	protected $queriesCalcRows = true;	
 
 	public static function getInstance($args = null)
 	{

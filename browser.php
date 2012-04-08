@@ -3,7 +3,7 @@
 /*
  * weaver: The stories engine
  *
- * Copyright 2010 Mo McRoberts.
+ * Copyright 2010-2012 Mo McRoberts.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,16 +22,36 @@ require_once(dirname(__FILE__) . '/model.php');
 
 class WeaverBrowser extends Page
 {
+	protected $defaultSkin = 'weaver';
 	protected $modelClass = 'Weaver';
 	protected $supportedTypes = array('text/html', 'application/json', 'application/rdf+xml');
+	protected $isDataSet = false;
 	
-	protected function perform_GET_RDF()
+	protected function perform_GET_RDF($type = 'application/rdf+xml')
 	{
 		$uri = $this->request->pageUri;
 		if(strlen($uri) > 1 && substr($uri, -1) == '/') $uri = substr($uri, 0, -1);
 
-		$doc = new RDFDocument($uri . '.rdf', $this->request->root . $this->object->__get('instanceRelativeURI'));
-		$this->object->rdf($doc, $this->request);
+		if(!isset($this->object))
+		{
+			$doc = new RDFDocument($uri . 'rdf', $uri);
+		}
+		else if($this->isDataSet)
+		{
+			$doc = new RDFDocument($uri . '.rdf', $this->request->base . $this->object->__get('relativeURI'));
+		}
+		else
+		{
+			$doc = new RDFDocument($uri . '.rdf', $this->request->base . $this->object->__get('instanceRelativeURI'));		
+		}
+		if(isset($this->object))
+		{
+			$this->object->rdf($doc, $this->request);
+		}
+		else
+		{
+			$this->populateRDF($doc);
+		}
 		$this->request->header('Content-type', 'application/rdf+xml');
 		$this->request->flush();
 		$xml = $doc->asXML();

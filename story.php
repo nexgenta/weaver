@@ -44,26 +44,33 @@ class Story extends Thing
 	{
 		$stories = 'http://contextus.net/stories/';
 		$olo = 'http://purl.org/ontology/olo/core#';
-		$g = $doc->graph($doc->primaryTopic, $stories.'Story');
+		$g = $doc->subject($doc->primaryTopic, $stories.'Story');
+		$g['rdfs:label'] = $this->title;
+		if(isset($this->description))
+		{
+			$g['dct:description'] = $this->description;
+		}
 		if(isset($this->subjects))
 		{
 			foreach($this->subjects as $subj)
 			{
-				$g->{RDF::dct.'subject'}[] = new RDFURI($subj);
+				$g['dct:subject'] = new RDFURI($subj);
 			}
 		}
-		$el = new RDFGraph(null, $stories.'EventList');
+		$el = new RDFInstance(null, $stories.'EventList');
+		$doc->add($el);
 		$events = $this->offsetGet('events');
 		$c = 1;
 		foreach($events as $ev)
 		{
-			$eg = new RDFGraph(null, $stories . 'EventSlot');
-			$eg->{$olo.'index'}[] = $c;
-			$eg->{RDF::rdfs.'label'}[] = $ev->title;
-			$eg->{$stories.'item'}[] = new RDFURI($request->root . $ev->__get('instanceRelativeURI'));
-			$el->{$stories.'slot'}[] = $eg;
-			$c++;
+			$eg = new RDFInstance(null, $stories.'EventSlot');
+			$doc->add($eg);
+			$eg['olo:index'] = $c;
+			$eg['rdfs:label'] = $ev->title;
+			$eg['stories:item'] = new RDFURI($request->root . $ev->__get('instanceRelativeURI'));
+			$el['stories:slot'] = $eg;
+			$c++;			
 		}
-		$g->{$stories.'events'}[] = $el;
+		$g['stories:events'] = $el;
 	}
 }

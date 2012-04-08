@@ -27,47 +27,47 @@ class Character extends Thing
 		$g = $doc->graph($doc->primaryTopic, RDF::foaf.'Person');
 		if(isset($this->title))
 		{
-			$g->{RDF::foaf.'name'}[] = $this->title;
+			$g['foaf:name'] = $this->title;
 		}
 		if(isset($this->altNames))
 		{
 			foreach($this->altNames as $name)
 			{
-				$g->{RDF::foaf.'name'}[] = $name;
+				$g['foaf:name'] = $name;
 			}
 		}
 		if(isset($this->prefix))
 		{
-			$g->{RDF::foaf.'title'}[] = $this->prefix;
+			$g['foaf:title'] = $this->prefix;
 		}
 		if(isset($this->firstName))
 		{
-			$g->{RDF::foaf.'firstName'}[] = $this->firstName;
+			$g['foaf:firstName'] = $this->firstName;
 		}
 		if(isset($this->lastName))
 		{
-			$g->{RDF::foaf.'lastName'}[] = $this->lastName;
+			$g['foaf:lastName'] = $this->lastName;
 		}
 		if(isset($this->givenName))
 		{
-			$g->{RDF::foaf.'givenName'}[] = $this->givenName;
+			$g['foaf:givenName'] = $this->givenName;
 		}
 		if(isset($this->familyName))
 		{
-			$g->{RDF::foaf.'famiyName'}[] = $this->familyName;
+			$g['foaf:familyName'] = $this->familyName;
 		}
 		if(isset($this->sameAs))
 		{
 			foreach($this->sameAs as $as)
 			{
-				$g->{RDF::owl.'sameAs'}[] = new RDFURI($as);
+				$g['owl:sameAs'] = new RDFURI($as);
 			}
 		}
 		if(isset($this->seeAlso))
 		{
 			foreach($this->seeAlso as $as)
 			{
-				$g->{RDF::foaf.'seeAlso'}[] = new RDFURI($as);
+				$g['rdfs:seeAlso'] = new RDFURI($as);
 			}
 		}
 		
@@ -80,7 +80,7 @@ class Character extends Thing
 		foreach($events as $ev)
 		{
 			$g = $doc->graph($request->root . $ev->instanceRelativeURI, 'http://purl.org/NET/c4dm/event.owl#Event');
-			$g->{'http://purl.org/NET/c4dm/event.owl#agent'}[] = new RDFURI($request->root . $this->__get('instanceRelativeURI'));
+			$g['ev:agent'] = new RDFURI($request->root . $this->__get('instanceRelativeURI'));
 		}
 	}													
 }

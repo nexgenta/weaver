@@ -3,7 +3,7 @@
 /*
  * weaver: The stories engine
  *
- * Copyright 2010 Mo McRoberts.
+ * Copyright 2010-2012 Mo McRoberts.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -86,30 +86,35 @@ class Event extends Thing
 	protected function rdfResource($doc, $request)
 	{
 		$events = 'http://purl.org/NET/c4dm/event.owl#';
-		$g = $doc->graph($doc->primaryTopic, $events.'Event');
+		$g = $doc->subject($doc->primaryTopic, $events.'Event');
+		$stories = $this->stories();
+		foreach($stories as $story)
+		{
+			$g['dct:subject'] = new RDFURI($request->base . $story->instanceRelativeURI);
+		}
 		if(isset($this->title))
 		{
-			$g->{RDF::dc.'title'}[] = $this->title;
+			$g['dct:title'] = $this->title;
 		}
 		if(isset($this->factors) && $a = $this->offsetGet('factors'))
 		{
 			foreach($a as $obj)
 			{
-				$g->{$events.'factor'}[] = new RDFURI($request->root . $obj->instanceRelativeURI);
+				$g['ev:factor'] = new RDFURI($request->base . $obj->instanceRelativeURI);
 			}		   
 		}
 		if(isset($this->agents) && $a = $this->offsetGet('agents'))
 		{
 			foreach($a as $obj)
 			{
-				$g->{$events.'agent'}[] = new RDFURI($request->root . $obj->instanceRelativeURI);
+				$g['ev:agent'] = new RDFURI($request->base . $obj->instanceRelativeURI);
 			}
 		}
 		if(isset($this->places) && $a = $this->offsetGet('places'))
 		{
 			foreach($a as $obj)
 			{
-				$g->{$events.'place'}[] = new RDFURI($request->root . $obj->instanceRelativeURI);
+				$g['ev:place'] = new RDFURI($request->base . $obj->instanceRelativeURI);
 			}
 		}
 	}

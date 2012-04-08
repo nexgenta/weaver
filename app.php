@@ -3,7 +3,7 @@
 /*
  * weaver: The stories engine
  *
- * Copyright 2010 Mo McRoberts.
+ * Copyright 2010-2012 Mo McRoberts.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 
 require_once(dirname(__FILE__) . '/browser.php');
 
-class WeaverBrowseIndex extends WeaverBrowser
+class WeaverApp extends WeaverBrowser
 {
 	protected $title = 'Oh, the tangled web...';
 	protected $crumbName = 'Weaver';

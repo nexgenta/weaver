@@ -1,0 +1,36 @@
+<?php
+require(dirname(__FILE__) . '/header.php');
+
+$storyLine = $events;
+$storylineTitle = 'Character Timeline';
+
+writeLn('<div class="section">');
+if(isset($object->description))
+{
+	writeLn('<p>' . _e($object->description) . '</p>');
+}
+require_once(dirname(__FILE__) . '/storyline.php');
+writeLn('</div>');
+
+if(count($stories))
+{
+	writeLn('<div class="section">');
+	writeLn('<h2>Featured in&hellip;</h2>');
+	foreach($stories as $story)
+	{
+		writeLn('<div class="story">');
+		writeLn('<h3><a href="' . _e($app_root . $story->relativeURI) . '">' . _e($story->title) . '</a></h3>');
+		if(isset($story->shortDescription))
+		{
+			writeLn('<p>' . _e($story->shortDescription) . '</p>');
+		}
+		writeLn('<p><a href="' . _e($app_root . $story->relativeURI) . '">Read more</a></p>');
+		writeLn('</div>');
+	}
+}
+
+writeLn('</div>');
+
+writeLn('<script src="' . _e($skin_iri) . 'storyline.js"></script>');
+
+require(dirname(__FILE__) . '/footer.php');

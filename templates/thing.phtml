@@ -1,0 +1,30 @@
+<?php
+require(dirname(__FILE__) . '/header.php');
+
+if(isset($object->description))
+{
+	writeLn('<div class="section"><p>' . _e($object->description) . '</p></div>');
+}
+
+writeLn('<div class="section">');
+writeLn('<h2>Featured in&hellip;</h2>');
+foreach($stories as $story)
+{
+	writeLn('<div class="story">');
+	writeLn('<h3><a href="' . _e($app_root . $story->relativeURI) . '">' . _e($story->title) . '</a></h3>');
+	if(isset($story->shortDescription))
+	{
+		writeLn('<p>' . _e($story->shortDescription) . '</p>');
+	}
+	writeLn('<p><a href="' . _e($app_root . $story->relativeURI) . '">Read more</a></p>');
+	writeLn('</div>');
+}
+
+writeLn('</div>');
+
+?>
+
+
+
+<?php
+require(dirname(__FILE__) . '/footer.php');

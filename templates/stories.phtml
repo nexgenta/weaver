@@ -1,0 +1,17 @@
+<?php
+require(dirname(__FILE__) . '/header.php');
+
+if(count($objects))
+{
+	writeLn('<div class="stories section">');
+	writeLn('<h2>Stories</h2>');
+	writeLn('<ul>');
+	foreach($objects as $story)
+	{
+		writeLn('<li><a href="' . _e($app_root . $story->relativeURI) . '">' . _e($story->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+
+require(dirname(__FILE__) . '/footer.php');

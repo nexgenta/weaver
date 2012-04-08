@@ -1,0 +1,25 @@
+<?php
+require(dirname(__FILE__) . '/header.php');
+?>
+
+<div class="section">
+	<h2>Hello there.</h2>
+	<p>
+	Welcome to Weaver. To get started, pick a universe to explore from the
+	list below.
+	</p>
+	<p>
+	(When there's more data, there'll be a better interface for this).
+	</p>
+	<ul>
+<?php
+	foreach($objects as $obj)
+	{
+		echo '<li><a href="' . _e($app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a></li>' . "\n";
+	}
+?>
+	</ul>
+</div>
+
+<?php
+require(dirname(__FILE__) . '/footer.php');

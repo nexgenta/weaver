@@ -24,7 +24,8 @@ class WeaverBrowseStories extends WeaverBrowser
 {
 	protected $templateName = 'stories.phtml';
 	protected $crumbName = 'Stories';
-
+	protected $isDataSet = true;
+	
 	protected function getObject()
 	{
 		if(null !== ($tag = $this->request->consume()))
@@ -41,5 +42,24 @@ class WeaverBrowseStories extends WeaverBrowser
 		}
 		$this->objects = $this->request->data['universe']->stories();
 		return true;
+	}
+	
+	protected function populateRDF($doc)
+	{		
+		$me = $doc->subject($doc->primaryTopic, URI::void.'Dataset');
+		$me['rdfs:label'] = 'Stories';
+		$parent = $doc->primaryTopic;
+		if(substr($parent, -1) == '/') $parent = substr($parent, 0, -1);
+		if(substr($parent, 0, 1) == '/') $parent = substr($parent, 1);
+		$parent = explode('/', $parent);
+		array_pop($parent);
+		$me['void:inDataset'] = new RDFURI('/' . implode('/', $parent));
+		foreach($this->objects as $obj)
+		{
+			$uri = $this->request->base . $obj->relativeURI;
+			$me['rdfs:seeAlso'] = new RDFURI($uri);
+			$sub = $doc->subject($uri, 'http://contextus.net/stories/Story');
+			$sub['rdfs:label'] = $obj->title;
+		}
 	}
 }

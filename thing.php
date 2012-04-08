@@ -3,7 +3,7 @@
 /*
  * weaver: The stories engine
  *
- * Copyright 2010 Mo McRoberts.
+ * Copyright 2010-2012 Mo McRoberts.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -232,12 +232,6 @@ class Thing extends Storable
 
 	public function rdf($doc, $request)
 	{	   
-		$doc->namespace('http://purl.org/ontology/po/', 'po');
-		$doc->namespace('http://contextus.net/stories/', 'stories');
-		$doc->namespace('http://purl.org/NET/c4dm/event.owl#', 'ev');
-		$doc->namespace('http://purl.org/ontology/olo/core#', 'olo');
-		$doc->namespace('http://purl.org/NET/c4dm/timeline.owl#', 'tl');
-
 		$this->rdfDocument($doc, $request);
 		$this->rdfResource($doc, $request);
 		$this->rdfLinks($doc, $request);
@@ -245,36 +239,36 @@ class Thing extends Storable
 
 	protected function rdfDocument($doc, $request)
 	{
-		$resourceGraph = $doc->graph($doc->fileURI);
-		$resourceGraph->{'http://purl.org/dc/terms/created'}[] = new RDFDateTime($this->created);
-		$resourceGraph->{'http://purl.org/dc/terms/modified'}[] = new RDFDateTime($this->modified);
-		$resourceGraph->{RDF::foaf.'primaryTopic'}[] = new RDFURI($doc->primaryTopic);
-		$resourceGraph->{RDF::rdfs.'label'}[] = 'Description of the ' . $this->kind . ' ' . $this->title;
+		$resourceGraph = $doc->resourceTopic();
+		$resourceGraph['dct:created'] = new RDFDateTime($this->created);
+		$resourceGraph['dct:modified'] = new RDFDateTime($this->modified);
+		$resourceGraph['foaf:primaryTopic'] = new RDFURI($doc->primaryTopic);
+		$resourceGraph['rdfs:label'] = 'Description of the ' . $this->kind . ' “' . $this->title . '”';
 	}
 
 	protected function rdfResource($doc, $request)
 	{
-		$g = $doc->graph($doc->primaryTopic, RDF::owl.'Thing');
-		$g->{RDF::foaf.'label'}[] = $this->title;
+		$g = $doc->subject($doc->primaryTopic, RDF::owl.'Thing');
+		$g['rdfs:label'] = $this->title;
 		if(isset($this->subjects))
 		{
 			foreach($this->subjects as $subj)
 			{
-				$g->{RDF::dct.'subject'}[] = new RDFURI($subj);
+				$g['dct:subject'] = new RDFURI($subj);
 			}
 		}
 		if(isset($this->sameAs))
 		{
 			foreach($this->sameAs as $subj)
 			{
-				$g->{RDF::owl.'sameAs'}[] = new RDFURI($subj);
+				$g['owl:sameAs'] = new RDFURI($subj);
 			}
 		}
 		if(isset($this->seeAlso))
 		{
 			foreach($this->seeAlso as $subj)
 			{
-				$g->{RDF::foaf.'seeAlso'}[] = new RDFURI($subj);
+				$g['rdfs:seeAlso'] = new RDFURI($subj);
 			}
 		}
 	}
@@ -285,16 +279,16 @@ class Thing extends Storable
 		{
 			foreach($this->links as $link)
 			{
-				$g = $doc->graph($link['href'], 'http://xmlns.com/foaf/0.1/Document');
+				$g = $doc->subject($link['href'], 'http://xmlns.com/foaf/0.1/Document');
 				if(isset($link['title']))
 				{
-					$g->{'http://purl.org/dc/elements/1.1/title'}[] = $link['title'];
+					$g['dct:title'] = $link['title'];
 				}
 				if(isset($link['description']))
 				{
-					$g->{'http://purl.org/dc/elements/1.1/description'}[] = $link['description'];
+					$g['dct:description'] = $link['description'];
 				}
-				$g->{'http://xmlns.com/foaf/0.1/primaryTopic'}[] = new RDFURI($doc->primaryTopic);
+				$g['foaf:topic'] = new RDFURI($doc->primaryTopic);
 			}
 		}
 	}
@@ -330,12 +324,12 @@ class Thing extends Storable
 				$list = array();
 				while($obj && $obj->kind != 'scheme')
 				{
-					$list[] = new RDFURI($request->root . $obj->__get('instanceRelativeURI'));
+					$list[] = new RDFURI($request->base . $obj->__get('instanceRelativeURI'));
 					$obj = $obj['parent'];
 				}
 				return $list;
 			}
-			return new RDFURI($request->root . $obj->__get('instanceRelativeURI'));
+			return new RDFURI($request->base . $obj->__get('instanceRelativeURI'));
 		}
 	    if(substr($uri, 0, 1) == '/')
 		{

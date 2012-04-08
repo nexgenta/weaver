@@ -23,7 +23,8 @@ require_once(dirname(__FILE__) . '/browser.php');
 class WeaverBrowseUniverse extends WeaverBrowser
 {
 	protected $templateName = 'universe.phtml';
-
+	protected $isDataSet = true;
+	
 	public function __construct()
 	{
 		parent::__construct();
